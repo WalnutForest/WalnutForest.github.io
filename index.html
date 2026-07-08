@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>个人主页 - 你的名字</title>
+    <style>
+        /* ---------- 全局重置 ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(145deg, #f6f9fc 0%, #e9f1f8 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            line-height: 1.6;
+            color: #1e293b;
+        }
+
+        /* ---------- 主卡片 ---------- */
+        .card {
+            max-width: 780px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 36px;
+            padding: 44px 48px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.2s ease;
+        }
+
+        /* ---------- 头部：头像 + 姓名 ---------- */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #3b82f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 44px;
+            font-weight: 500;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+            /* 如果你有自己的头像图片，可以把上面 background 和 font-size 这五行注释掉，
+               换成下面这行，并把 avatar.jpg 换成你的图片文件名 */
+            /* background: url('avatar.jpg') center/cover no-repeat; */
+        }
+
+        .name-title h1 {
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #0f172a;
+        }
+
+        .name-title .tagline {
+            font-size: 18px;
+            font-weight: 400;
+            color: #475569;
+            margin-top: 4px;
+        }
+
+        /* ---------- 分隔装饰 ---------- */
+        .divider {
+            width: 60px;
+            height: 4px;
+            background: #3b82f6;
+            border-radius: 4px;
+            margin: 24px 0 28px 0;
+        }
+
+        /* ---------- 信息区块 ---------- */
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title span {
+            font-size: 22px;
+        }
+
+        .info-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 28px;
+            background: #f8fafc;
+            padding: 18px 22px;
+            border-radius: 18px;
+            margin-bottom: 28px;
+        }
+
+        .info-grid .item {
+            font-size: 15px;
+            color: #1e293b;
+        }
+
+        .info-grid .item strong {
+            font-weight: 600;
+            color: #0f172a;
+            margin-right: 4px;
+        }
+
+        /* ---------- 学习经历 ---------- */
+        .edu-item {
+            margin-bottom: 22px;
+            padding-left: 4px;
+        }
+
+        .edu-item h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .edu-item .meta {
+            font-size: 14px;
+            color: #64748b;
+            margin: 2px 0 6px 0;
+        }
+
+        .edu-item p {
+            font-size: 15px;
+            color: #334155;
+        }
+
+        .edu-item ul {
+            margin-top: 6px;
+            padding-left: 22px;
+            font-size: 15px;
+            color: #334155;
+        }
+
+        .edu-item ul li {
+            margin-bottom: 2px;
+        }
+
+        /* ---------- 标签（技能 / 兴趣） ---------- */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 6px 0 10px 0;
+        }
+
+        .tags .tag {
+            background: #e2e8f0;
+            color: #1e293b;
+            padding: 4px 18px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            transition: 0.15s;
+        }
+
+        .tags .tag:hover {
+            background: #3b82f6;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* ---------- 页脚社交 ---------- */
+        .footer-links {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            color: #3b82f6;
+            transition: 0.15s;
+        }
+
+        .footer-links a:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+
+        /* ---------- 响应式适配 ---------- */
+        @media (max-width: 600px) {
+            .card {
+                padding: 28px 20px;
+                border-radius: 28px;
+            }
+            .profile-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            .avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 34px;
+            }
+            .name-title h1 {
+                font-size: 26px;
+            }
+            .info-grid {
+                flex-direction: column;
+                gap: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+
+        <!-- ====== 头部：头像 + 姓名 ====== -->
+        <div class="profile-header">
+            <div class="avatar">张</div>
+            <!-- ↑ 如果显示汉字首字母不满意，可以改成你喜欢的 Emoji，比如 🧑‍💻 或 🌟 -->
+            <div class="name-title">
+                <h1>张小明</h1>
+                <div class="tagline">前端学习者 · 热爱技术与创造</div>
+            </div>
+        </div>
+
+        <!-- ====== 个人信息 ====== -->
+        <div class="section-title"><span>📌</span> 个人信息</div>
+        <div class="info-grid">
+            <div class="item"><strong>📍 现居：</strong>北京</div>
+            <div class="item"><strong>📧 邮箱：</strong>zhang.xiaoming@email.com</div>
+            <div class="item"><strong>🎂 年龄：</strong>22岁</div>
+            <div class="item"><strong>📖 状态：</strong>计算机本科在读（大四）</div>
+        </div>
+
+        <!-- ====== 学习经历 ====== -->
+        <div class="section-title"><span>🎓</span> 学习经历</div>
+
+        <div class="edu-item">
+            <h3>北京大学 · 计算机科学与技术</h3>
+            <div class="meta">2022 – 2026 | 本科 · 工学学士</div>
+            <ul>
+                <li>主修课程：数据结构、操作系统、计算机网络、数据库原理</li>
+                <li>GPA：3.7 / 4.0，获校级优秀学生奖学金（2024）</li>
+                <li>毕业设计：《基于 Vue 的课程协作平台》</li>
+            </ul>
+        </div>
+
+        <div class="edu-item">
+            <h3>北京四中</h3>
+            <div class="meta">2019 – 2022 | 高中 · 理科方向</div>
+            <ul>
+                <li>全国中学生物理竞赛 省级二等奖</li>
+                <li>校科技节编程挑战赛 一等奖</li>
+            </ul>
+        </div>
+
+        <!-- ====== 技能 / 兴趣 ====== -->
+        <div class="section-title"><span>🧩</span> 技能 &amp; 兴趣</div>
+        <div class="tags">
+            <span class="tag">HTML / CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Vue 3</span>
+            <span class="tag">Python</span>
+            <span class="tag">Git</span>
+            <span class="tag">摄影</span>
+            <span class="tag">篮球</span>
+        </div>
+
+        <!-- ====== 页脚链接 ====== -->
+        <div class="footer-links">
+            <a href="https://github.com/你的用户名" target="_blank">🐙 GitHub</a>
+            <a href="mailto:zhang.xiaoming@email.com">✉️ 联系我</a>
+            <!-- 如果以后有博客或作品集，可以继续加 -->
+        </div>
+
+    </div>
+
+</body>
+</html>
